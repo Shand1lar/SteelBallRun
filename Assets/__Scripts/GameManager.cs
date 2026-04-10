@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -7,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Timer")]
     public float timeLimit = 90f;
-
+    //public Text timerText;
     private float timeRemaining;
     private bool gameActive = false;
     private bool isPaused   = false;
@@ -47,6 +48,11 @@ public class GameManager : MonoBehaviour
                 timeRemaining = 0f;
                 TriggerFailure();
             }
+
+            //int minutes = Mathf.FloorToInt(timeRemaining / 60);
+            //int seconds = Mathf.FloorToInt(timeRemaining / 60);
+
+            //timerText.text = "Time Left: " + minutes + ":" + seconds.ToString("00");
         }
     }
 

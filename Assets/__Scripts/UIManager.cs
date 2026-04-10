@@ -1,5 +1,5 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,10 +12,10 @@ public class UIManager : MonoBehaviour
     public GameObject failurePanel;
 
     [Header("HUD")]
-    public TextMeshProUGUI timerText;
+    public Text timerText;
 
     [Header("Victory Screen")]
-    public TextMeshProUGUI victoryTimeText;
+    public Text victoryTimeText;
 
     void Awake()
     {
