@@ -3,12 +3,12 @@ using UnityEngine;
 public class PlayerBall : MonoBehaviour
 {
     [Header("Movement")]
-    public float moveForce    = 15f;
-    public float maxSpeed     = 8f;
+    public float moveForce = 15f;
+    public float maxSpeed = 8f;
 
-    [Header("World Settings")]
-    public float surfaceY      = 1.7f;
+    [Header("Respawn")]
     public float fallThreshold = -2f;
+    public float respawnHeightOffset = 0.5f;
 
     [HideInInspector] public bool inputEnabled = true;
 
@@ -17,14 +17,15 @@ public class PlayerBall : MonoBehaviour
 
     void Start()
     {
-        rb            = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         spawnPosition = transform.position;
     }
 
     void FixedUpdate()
     {
-        if (inputEnabled) Move();
-        ClampToSurface();
+        if (inputEnabled)
+            Move();
+
         CheckFallOff();
     }
 
@@ -32,6 +33,7 @@ public class PlayerBall : MonoBehaviour
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
+
         rb.AddForce(new Vector3(h, 0, v) * moveForce);
 
         Vector3 flat = new Vector3(rb.velocity.x, 0, rb.velocity.z);
@@ -42,29 +44,24 @@ public class PlayerBall : MonoBehaviour
         }
     }
 
-    void ClampToSurface()
-    {
-        if (transform.position.y < surfaceY)
-        {
-            transform.position = new Vector3(
-                transform.position.x, surfaceY, transform.position.z);
-            rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        }
-    }
-
     void CheckFallOff()
     {
         if (transform.position.y < fallThreshold)
         {
-            rb.velocity        = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            transform.position = spawnPosition;
+            Respawn();
         }
+    }
+
+    void Respawn()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        transform.position = spawnPosition + Vector3.up * respawnHeightOffset;
     }
 
     public void FreezeVelocity()
     {
-        rb.velocity        = Vector3.zero;
+        rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
     }
 }
