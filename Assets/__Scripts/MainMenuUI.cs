@@ -7,14 +7,17 @@ public class MainMenuUI : MonoBehaviour
 {
     [Header("Panels")]
     public GameObject mainPanel;
+    public GameObject levelSelectPanel;
     public GameObject leaderboardPanel;
 
     [Header("Leaderboard UI")]
     public TextMeshProUGUI leaderboardText;
 
-    public void StartGame()
+
+    public void ShowLevelSelect()
     {
-        SceneManager.LoadScene(1);
+        mainPanel.SetActive(false);
+        levelSelectPanel.SetActive(true);
     }
 
     public void ShowLeaderboard()
@@ -26,10 +29,30 @@ public class MainMenuUI : MonoBehaviour
 
     public void ShowMainMenu()
     {
+        levelSelectPanel.SetActive(false);
         leaderboardPanel.SetActive(false);
         mainPanel.SetActive(true);
     }
 
+    public void LoadLevel1()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void LoadLevel2()
+    {
+        SceneManager.LoadScene(2);
+    }
+
+    public void LoadLevel_B_03()
+    {
+        SceneManager.LoadScene(3);
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
     public void QuitGame()
     {
         Application.Quit();
