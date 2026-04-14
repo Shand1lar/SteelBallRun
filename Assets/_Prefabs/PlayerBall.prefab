@@ -132,3 +132,5 @@ MonoBehaviour:
   fallThreshold: -2
   respawnHeightOffset: 0.5
   inputEnabled: 1
+  fallSound: {fileID: 8300000, guid: fd0da9b29097ad34186bd60ede3c3215, type: 3}
+  moveSound: {fileID: 8300000, guid: 8874129a0e76a474faab9e978190e170, type: 3}

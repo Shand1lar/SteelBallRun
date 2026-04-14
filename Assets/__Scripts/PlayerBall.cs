@@ -15,10 +15,32 @@ public class PlayerBall : MonoBehaviour
     private Rigidbody rb;
     private Vector3 spawnPosition;
 
+    public AudioClip fallSound;
+    private AudioSource audioSource;
+    [Header("Audio")]
+        public AudioClip moveSound;
+
+        private AudioSource moveAudioSource;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         spawnPosition = transform.position;
+        
+        audioSource = GetComponent<AudioSource>();
+
+            if (audioSource == null)
+                {
+                audioSource = gameObject.AddComponent<AudioSource>();
+                }
+
+        audioSource.volume = 0.2f;
+
+        moveAudioSource = gameObject.AddComponent<AudioSource>();
+        moveAudioSource.clip = moveSound;
+        moveAudioSource.loop = true;
+        moveAudioSource.playOnAwake = false;
+        moveAudioSource.volume = 0.01f;
     }
 
     void FixedUpdate()
@@ -42,6 +64,23 @@ public class PlayerBall : MonoBehaviour
             Vector3 clamped = flat.normalized * maxSpeed;
             rb.velocity = new Vector3(clamped.x, rb.velocity.y, clamped.z);
         }
+
+        bool isMoving = Mathf.Abs(h) > 0.1f || Mathf.Abs(v) > 0.1f;
+
+        if (isMoving)
+        {
+            if (!moveAudioSource.isPlaying && moveSound != null)
+            {
+                moveAudioSource.Play();
+            }
+        }
+        else
+        {
+            if (moveAudioSource.isPlaying)
+            {
+                moveAudioSource.Stop();
+            }
+        }
     }
 
     void CheckFallOff()
@@ -57,6 +96,10 @@ public class PlayerBall : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         transform.position = spawnPosition + Vector3.up * respawnHeightOffset;
+        if (fallSound != null)
+            {
+            audioSource.PlayOneShot(fallSound);
+            }
     }
 
     public void FreezeVelocity()
