@@ -40,7 +40,7 @@ public class PlayerBall : MonoBehaviour
         moveAudioSource.clip = moveSound;
         moveAudioSource.loop = true;
         moveAudioSource.playOnAwake = false;
-        moveAudioSource.volume = 0.01f;
+        moveAudioSource.volume = 0.35f;
     }
 
     void FixedUpdate()
